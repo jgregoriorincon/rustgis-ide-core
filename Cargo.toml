@@ -1,0 +1,12 @@
+[package]
+name = "ide-core"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+repository = "https://github.com/jgregoriorincon/rustgis-ide-core"
+description = "Reads the catalogues of spatial data infrastructures (IDE) into one list of services, for the ide-* RustGIS plugins"
+
+# No RustGIS host calls here: everything runs, and is tested, on your own computer.
+[dependencies]
+serde_json = "1"

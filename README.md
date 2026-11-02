@@ -28,7 +28,7 @@ Depend on a tagged version, so a change here never reaches a plugin until it ask
 
 ```toml
 [dependencies]
-ide-core = { git = "https://github.com/jgregoriorincon/rustgis-ide-core", tag = "v0.1.0" }
+ide-core = { git = "https://github.com/jgregoriorincon/rustgis-ide-core", tag = "v0.2.0" }
 ```
 
 To try a change here in a plugin before tagging it, point the plugin at your checkout without
@@ -40,7 +40,7 @@ cargo test --config 'patch."https://github.com/jgregoriorincon/rustgis-ide-core"
 
 ## Releasing
 
-Bump `version` in `Cargo.toml`, then tag it: `git tag v0.2.0 && git push origin v0.2.0`. A
+Bump `version` in `Cargo.toml`, then tag it: `git tag v0.3.0 && git push origin v0.3.0`. A
 change that breaks a plugin's code needs a new minor version while this is 0.x.
 
 ## License

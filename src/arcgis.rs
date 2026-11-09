@@ -91,9 +91,15 @@ pub fn fit_scale(scale: f64, lat: f64, (min_scale, max_scale): (Option<f64>, Opt
 }
 
 /// The address of an ArcGIS layer's features as GeoJSON in longitude/latitude: those that pass
-/// its filter, in `view` when given, at most `limit`. `None` for anything but an ArcGIS layer.
-pub fn features_url(e: &Entry, view: Option<View>, limit: u32) -> Option<String> {
-    query(e, view, &format!("outFields=*&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount={limit}"))
+/// its filter, in `view` when given. `None` for anything but an ArcGIS layer.
+///
+/// It asks for no window (`resultOffset`, `resultRecordCount`), so RustGIS (0.6.0 on, in the
+/// app) can read it as a service's features when `layer.addUrl` is given `"service": true`: in
+/// pages, as protocol buffers (`f=pbf`) when the layer lists them, falling back to GeoJSON. A
+/// query with a window of its own is read as asked, one answer at most `maxRecordCount` long,
+/// and so is this one anywhere RustGIS doesn't page it, such as `rustgis-cli`.
+pub fn features_url(e: &Entry, view: Option<View>) -> Option<String> {
+    query(e, view, "outFields=*&returnGeometry=true&outSR=4326&f=geojson")
 }
 
 /// The address that counts an ArcGIS layer's features that pass its filter in `view`: the
@@ -242,14 +248,16 @@ mod tests {
             entry("https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/Peaje/FeatureServer/0/query?where=a%253D'B'", None);
         let view = View { bbox: [-8_250_000.4, 520_000.0, -8_230_000.0, 530_000.6] };
         assert_eq!(
-            features_url(&peajes, Some(view), 2000).as_deref(),
+            features_url(&peajes, Some(view)).as_deref(),
             Some(
-                "https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/Peaje/FeatureServer/0/query?where=a%3D%27B%27&outFields=*&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=2000&geometry=-8250000,520000,-8230000,530001&geometryType=esriGeometryEnvelope&inSR=3857&spatialRel=esriSpatialRelIntersects"
+                "https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/Peaje/FeatureServer/0/query?where=a%3D%27B%27&outFields=*&returnGeometry=true&outSR=4326&f=geojson&geometry=-8250000,520000,-8230000,530001&geometryType=esriGeometryEnvelope&inSR=3857&spatialRel=esriSpatialRelIntersects"
             )
         );
-        let lote = features_url(&entry(LOTE, None), None, 1000).expect("a layer");
+        let lote = features_url(&entry(LOTE, None), None).expect("a layer");
         assert!(lote.starts_with(&format!("{LOTE}/query?where=1%3D1&")), "{lote}");
-        assert_eq!(features_url(&entry("https://x/rest/services/a/MapServer", None), None, 10), None);
+        // No window of its own: RustGIS pages it, and only then.
+        assert!(!lote.contains("resultRecordCount") && !lote.contains("resultOffset"), "{lote}");
+        assert_eq!(features_url(&entry("https://x/rest/services/a/MapServer", None), None), None);
     }
 
     #[test]

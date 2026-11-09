@@ -28,7 +28,7 @@ Depend on a tagged version, so a change here never reaches a plugin until it ask
 
 ```toml
 [dependencies]
-ide-core = { git = "https://github.com/jgregoriorincon/rustgis-ide-core", tag = "v0.2.0" }
+ide-core = { git = "https://github.com/jgregoriorincon/rustgis-ide-core", tag = "v0.3.0" }
 ```
 
 To try a change here in a plugin before tagging it, point the plugin at your checkout without

@@ -336,9 +336,7 @@ mod tests {
 
     #[test]
     fn the_box_a_layer_declares() {
-        let layer = |xmin: f64, ymin: f64, xmax: f64, ymax: f64, sr: Value| {
-            json!({"extent": {"xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax, "spatialReference": sr}})
-        };
+        let layer = |xmin: f64, ymin: f64, xmax: f64, ymax: f64, sr: Value| json!({"extent": {"xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax, "spatialReference": sr}});
         let lote = entry(LOTE, None);
         // Catastro's lots, as their description gives them.
         let declared = layer(-74.450724163, 3.73067253300002, -73.989018105, 4.83695168200001, json!({"wkid": 4326, "latestWkid": 4326}));

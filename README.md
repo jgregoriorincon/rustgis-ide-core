@@ -3,6 +3,10 @@
 Reads the catalogues of spatial data infrastructures (IDE) into one list of services, for the
 `ide-*` [RustGIS](https://github.com/opengeos/RustGIS) plugins.
 
+> **Unofficial.** This crate and the plugins that use it are not made, endorsed or supported by
+> the entities whose catalogues they read: IDECA and Bogotá's district government, the Alcaldía de
+> Barranquilla, or IGAC. They read what those entities publish openly; the data belongs to them.
+
 Every IDE publishes its catalogue its own way. Each plugin turns its catalogue into `Entry`s,
 and this crate does the rest the same way for all of them:
 
@@ -24,6 +28,7 @@ Catalogues are input from the web: nothing here panics on them.
 | Plugin | Catalogue | Repository |
 |---|---|---|
 | `ide-bogota` | IDECA (Bogotá) | [rustgis-ide-bogota](https://github.com/jgregoriorincon/rustgis-ide-bogota) |
+| `ide-barranquilla` | GeoBAQ (Alcaldía de Barranquilla) | [rustgis-ide-barranquilla](https://github.com/jgregoriorincon/rustgis-ide-barranquilla) |
 
 ## Using it
 

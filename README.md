@@ -13,6 +13,9 @@ and this crate does the rest the same way for all of them:
 - `index`: the list as a plugin embeds it, and how it stands against the live catalogue.
 - `browse`: the list as a panel walks it, category by category.
 - `arcgis`: the addresses RustGIS reads a service's features or map image from.
+- `layers`: the map's layers a plugin added, told from the user's own: the plugin's features
+  queries carry a mark of its own (`rustgis-plugin=<id>`), and a layer is the plugin's only when
+  its source has it.
 
 Catalogues are input from the web: nothing here panics on them.
 

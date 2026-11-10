@@ -11,6 +11,8 @@
 //!   catalogue.
 //! - [`browse`]: the list as the panel walks it, category by category.
 //! - [`arcgis`]: the addresses RustGIS reads a service's features or map image from.
+//! - [`layers`]: the map's layers a plugin added, told from the user's own by a mark in their
+//!   source.
 //!
 //! Catalogues are input from the web: nothing here panics on them, and [`entry::clean`] drops
 //! what can't be used.
@@ -26,6 +28,7 @@ pub mod browse;
 pub mod entry;
 pub mod index;
 pub mod kind;
+pub mod layers;
 pub mod url;
 
 pub use entry::{Entry, clean};
